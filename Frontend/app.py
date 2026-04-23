@@ -2,13 +2,17 @@ import os ,sys
 import streamlit as st
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from Backend.RAG_Ingestion import process_document_to_chroma_db, process_answer
+from pathlib import Path
 
 st.title("RAGbot")
+
+BASE_DIR    = Path(__file__).resolve().parent.parent
+DOCS_DIR    = BASE_DIR / "Data" / "Docs"
 
 uploaded_file = st.file_uploader("Upload a PDF File", type=["pdf"])
 
 if uploaded_file is not None:
-    docs_path = os.path.join(os.path.dirname(__file__), "..", "Data", "Docs")
+    docs_path = str(DOCS_DIR)
 
     os.makedirs(docs_path, exist_ok=True)
 

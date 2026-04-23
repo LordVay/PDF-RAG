@@ -7,15 +7,13 @@ from langchain_chroma import Chroma
 from langchain_classic.chains.retrieval_qa.base import RetrievalQA
 from dotenv import load_dotenv
 import streamlit as st
+from pathlib import Path
 
 load_dotenv()
 
-BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOCS_DIR    = os.path.join(BASE_DIR, "Data", "Docs")
-VECTORS_DIR = os.path.join(BASE_DIR, "Data", "Vectors")
-
-print(DOCS_DIR)
-print(VECTORS_DIR)
+BASE_DIR    = Path(__file__).resolve().parent.parent
+DOCS_DIR    = BASE_DIR / "Data" / "Docs"
+VECTORS_DIR = BASE_DIR / "Data" / "Vectors"
 
 def get_embedings():
     embedding = HuggingFaceEmbeddings()
@@ -31,7 +29,7 @@ def get_llm():
 
 def process_document_to_chroma_db():
     loader = DirectoryLoader(
-        path = DOCS_DIR ,
+        path = str(DOCS_DIR) ,
         glob = "./*.pdf",
         loader_cls = UnstructuredFileLoader
     )
@@ -46,7 +44,7 @@ def process_document_to_chroma_db():
     vector_db = Chroma.from_documents(
         documents=texts,
         embedding=get_embedings(),
-        persist_directory=VECTORS_DIR
+        persist_directory=str(VECTORS_DIR)
     )
 
     return 0
@@ -54,7 +52,7 @@ def process_document_to_chroma_db():
 
 def process_answer(question):
     vectordb = Chroma(
-        persist_directory=VECTORS_DIR,
+        persist_directory=str(VECTORS_DIR),
         embedding_function=get_embedings()
     )
 
