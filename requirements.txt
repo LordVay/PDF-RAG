@@ -9,6 +9,7 @@ unstructured
 unstructured[pdf]
 langchain-unstructured
 langchain-google-genai
+langchain-classic
 chromadb==0.4.24
 langchain-chroma==0.1.2
 protobuf==4.25.3
