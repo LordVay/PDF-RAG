@@ -6,6 +6,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_chroma import Chroma
 from langchain_classic.chains.retrieval_qa.base import RetrievalQA
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
 
@@ -19,7 +20,7 @@ def get_embedings():
 def get_llm():
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
-        google_api_key = os.environ["GEMINI_API_KEY"],
+        google_api_key = st.secrets["GEMINI_API_KEY"],
         temperature = 0.1
     )
     return llm
