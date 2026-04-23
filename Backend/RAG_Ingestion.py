@@ -10,11 +10,12 @@ import streamlit as st
 
 load_dotenv()
 
-working_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(working_dir)
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DOCS_DIR    = os.path.join(BASE_DIR, "Data", "Docs")
+VECTORS_DIR = os.path.join(BASE_DIR, "Data", "Vectors")
 
-docs_dir    = os.path.join(parent_dir, "Data", "Docs")
-vectors_dir = os.path.join(working_dir, "Data", "Vectors")
+print(DOCS_DIR)
+print(VECTORS_DIR)
 
 def get_embedings():
     embedding = HuggingFaceEmbeddings()
@@ -30,7 +31,7 @@ def get_llm():
 
 def process_document_to_chroma_db():
     loader = DirectoryLoader(
-        path = docs_dir,
+        path = DOCS_DIR ,
         glob = "./*.pdf",
         loader_cls = UnstructuredFileLoader
     )
@@ -45,7 +46,7 @@ def process_document_to_chroma_db():
     vector_db = Chroma.from_documents(
         documents=texts,
         embedding=get_embedings(),
-        persist_directory=vectors_dir
+        persist_directory=VECTORS_DIR
     )
 
     return 0
@@ -53,7 +54,7 @@ def process_document_to_chroma_db():
 
 def process_answer(question):
     vectordb = Chroma(
-        persist_directory=vectors_dir,
+        persist_directory=VECTORS_DIR,
         embedding_function=get_embedings()
     )
 
