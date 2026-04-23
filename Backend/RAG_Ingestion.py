@@ -13,6 +13,9 @@ load_dotenv()
 working_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(working_dir)
 
+docs_dir    = os.path.join(parent_dir, "Data", "Docs")
+vectors_dir = os.path.join(working_dir, "Data", "Vectors")
+
 def get_embedings():
     embedding = HuggingFaceEmbeddings()
     return embedding
@@ -27,7 +30,7 @@ def get_llm():
 
 def process_document_to_chroma_db():
     loader = DirectoryLoader(
-        path = f"{parent_dir}\Data\Docs",
+        path = docs_dir,
         glob = "./*.pdf",
         loader_cls = UnstructuredFileLoader
     )
@@ -42,7 +45,7 @@ def process_document_to_chroma_db():
     vector_db = Chroma.from_documents(
         documents=texts,
         embedding=get_embedings(),
-        persist_directory=f"{working_dir}/Data/Vectors"
+        persist_directory=vectors_dir
     )
 
     return 0
@@ -50,7 +53,7 @@ def process_document_to_chroma_db():
 
 def process_answer(question):
     vectordb = Chroma(
-        persist_directory=f"{working_dir}/Data/Vectors",
+        persist_directory=vectors_dir,
         embedding_function=get_embedings()
     )
 

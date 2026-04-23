@@ -10,7 +10,11 @@ st.title("RAGbot")
 uploaded_file = st.file_uploader("Upload a PDF File", type=["pdf"])
 
 if uploaded_file is not None:
-    save_path = os.path.join(f"{working_dir}\Data\Docs", uploaded_file.name)
+    save_dir= os.path.join(working_dir, "Data", "Docs")
+
+    os.makedirs(save_dir, exist_ok=True)
+
+    save_path = os.path.join(save_dir,uploaded_file.name)
 
     with open(save_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
