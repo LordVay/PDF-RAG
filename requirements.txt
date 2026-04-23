@@ -8,5 +8,11 @@ langchain-text-splitters
 unstructured
 unstructured[pdf]
 langchain-unstructured
-langchain-chroma
 langchain-google-genai
+chromadb==0.4.24
+langchain-chroma==0.1.2
+protobuf==4.25.3
+grpcio==1.62.2
+opentelemetry-api==1.24.0
+opentelemetry-sdk==1.24.0
+opentelemetry-exporter-otlp-proto-grpc==1.24.0
