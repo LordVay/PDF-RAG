@@ -1,3 +1,5 @@
 venv312/
 /.env
 .streamlit/
+__pycache__/
+*.pyc
